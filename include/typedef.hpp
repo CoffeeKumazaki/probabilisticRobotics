@@ -22,4 +22,8 @@ using LPOS_CIT = std::list<Pos2D>::const_iterator;
 struct Size2D {
   double w = 0;
   double h = 0;
+
+  Size2D(double _w = 0, double _h = 0) {
+    w = _w; h = _h;
+  }
 };

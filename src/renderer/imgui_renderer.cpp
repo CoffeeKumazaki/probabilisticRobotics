@@ -190,7 +190,9 @@ void renderer::fillCircle(double x, double y, double r, color col /*= BLACK*/) {
 }
 
 void renderer::drawRectangle(double x, double y, double w, double h, double lw /*= 1*/, color col /*= BLACK*/) {
-
+  
+  ImDrawList *draw_list = ImGui::GetWindowDrawList();
+  draw_list->AddRect(ImVec2(x-w/2, y-h/2), ImVec2(x+w/2, y+h/2), ImColor(ImVec4(col.r, col.g, col.b, col.a)), 0.0, 15, lw);
 }
 
 void renderer::fillRectangle(double x, double y, double w, double h, color col /*= BLACK*/) {
@@ -199,4 +201,6 @@ void renderer::fillRectangle(double x, double y, double w, double h, color col /
 
 void renderer::drawLine(double x1, double y1, double x2, double y2, double lw /*= 1*/, color col /*= BLACK*/) {
 
+  ImDrawList *draw_list = ImGui::GetWindowDrawList();
+  draw_list->AddLine(ImVec2(x1, y1), ImVec2(x2, y2), ImColor(ImVec4(col.r, col.g, col.b, col.a)), lw);
 }

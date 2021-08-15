@@ -2,15 +2,13 @@
 #include <renderer/renderer.hpp>
 #include <world/world.hpp>
 #include <objects/landmark.hpp>
+#include <objects/robot.hpp>
+#include <sensors/ideal_camera.hpp>
 
 int main(int argc, char const *argv[]) {
 
 	GetGM().init();
 	GetGM().setBackgroundcolor(color(47, 39, 37, 255));
-
-	// Our state
-	bool show_demo_window = true;
-	bool show_another_window = false;
 
 	World& world = World::getInstance();
 	world.init();
@@ -18,6 +16,11 @@ int main(int argc, char const *argv[]) {
 	OBJ_PTR landmark1 = std::make_shared<Landmark>(Pos2D(100, 100), 10);
 
 	world.getMap()->addObject(landmark1);
+
+	auto robot = std::make_shared<Robot>(Pos2D(500, 500), Size2D(10, 30));
+	ICAM_PTR camera = std::make_shared<IdealCamera>(robot, Pos2D(0,0));
+	robot->addCamera(camera);
+	world.addObject(robot);
 
 	// Main loop
 	while (!GetGM().shouldCloseWindow())

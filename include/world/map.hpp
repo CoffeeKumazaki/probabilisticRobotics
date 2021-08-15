@@ -12,6 +12,8 @@ public:
   void draw();
   void addObject(OBJ_PTR obs);
 
+  int getObjects(std::list<OBJ_PTR>& o);
+
 private:
   std::list<OBJ_PTR> objs;
 };

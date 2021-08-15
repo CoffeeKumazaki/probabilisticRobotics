@@ -48,7 +48,10 @@ set(SRCS
   src/world/map.cpp
   src/objects/object.cpp
   src/objects/landmark.cpp
+  src/objects/ideal_robot.cpp
   src/objects/robot.cpp
+  src/sensors/sensor.cpp
+  src/sensors/ideal_camera.cpp
 )
 add_executable(${PROJECT_NAME} ${SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC

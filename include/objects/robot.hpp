@@ -1,14 +1,15 @@
 #pragma once
 
-#include <objects/object.hpp>
+#include <objects/ideal_robot.hpp>
 
-class Robot : public Object {
+class Robot : public IdealRobot {
 
 public:
   Robot(Pos2D p, Size2D s);
   ~Robot();
 
   void draw();
+  void update();
 
 private:
   Size2D size;

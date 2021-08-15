@@ -28,3 +28,9 @@ void Map::addObject(OBJ_PTR obs) {
     objs.push_back(obs);
   }
 }
+
+int Map::getObjects(std::list<OBJ_PTR>& o) {
+
+  o.assign(objs.begin(), objs.end());
+  return o.size();
+}

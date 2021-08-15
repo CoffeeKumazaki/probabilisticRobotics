@@ -8,6 +8,8 @@ public:
   ~Object();
 
   virtual void draw();
+  virtual void update();
+  Pos2D getPos() { return pos; }
 
 protected:
   Pos2D pos;

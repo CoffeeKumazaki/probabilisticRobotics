@@ -17,3 +17,7 @@ Object::~Object() {
 void Object::draw() {
   
 }
+
+void Object::update() {
+  
+}
