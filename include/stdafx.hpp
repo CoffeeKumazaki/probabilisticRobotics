@@ -18,3 +18,5 @@
 #include <math.h>
 #include <random>
 #include <memory>
+
+#include <typedef.hpp>

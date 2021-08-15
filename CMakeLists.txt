@@ -14,8 +14,11 @@ project(${PROJECT_NAME})
 find_package(OpenGL REQUIRED)
 add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GLEW)
 include_directories(/usr/local/opt/glew/include)
+include_directories(/opt/homebrew/opt/glew/include)
 include_directories(/usr/local/opt/glfw/include)
+include_directories(/opt/homebrew/opt/glfw/include)
 link_directories(/usr/local/lib)
+link_directories(/opt/homebrew/lib)
 
 ## add imgui as a library
 add_library(imgui STATIC
@@ -27,6 +30,11 @@ add_library(imgui STATIC
   src/imgui/imgui_impl_opengl3.cpp
 )
 
+add_library(renderer STATIC
+  src/renderer/imgui_renderer.cpp
+)
+target_include_directories(renderer PUBLIC include)
+
 ## Define libraries
 # target_include_directories(${PROJECT_NAME}_lib include)
 # add_library(${PROJECT_NAME}_lib
@@ -36,12 +44,18 @@ add_library(imgui STATIC
 ## Define the executable
 set(SRCS 
   src/main.cpp
+  src/world/world.cpp
+  src/world/map.cpp
+  src/objects/object.cpp
+  src/objects/landmark.cpp
+  src/objects/robot.cpp
 )
 add_executable(${PROJECT_NAME} ${SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
   include
 )
 target_link_libraries(${PROJECT_NAME} 
+  renderer
   imgui
   glew
   glfw 
