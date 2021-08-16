@@ -53,6 +53,7 @@ set(SRCS
   src/sensors/sensor.cpp
   src/sensors/ideal_camera.cpp
   src/agents/agent.cpp
+  src/util/random.cpp
 )
 add_executable(${PROJECT_NAME} ${SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC

@@ -5,7 +5,7 @@
 #include <objects/robot.hpp>
 #include <sensors/ideal_camera.hpp>
 
-#define SIM_DT (0.1)
+#define TIME_INTERVAL (0.1)
 
 int main(int argc, char const *argv[]) {
 
@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
 		GetGM().prerender();
 
 		world.draw();
-		world.update(SIM_DT);
+		world.update(TIME_INTERVAL);
 
 		// Rendering
 		GetGM().render();
