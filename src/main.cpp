@@ -19,13 +19,16 @@ int main(int argc, char const *argv[]) {
 
 	world.getMap()->addObject(landmark1);
 
-	auto robot = std::make_shared<Robot>(Pos2D(500, 500), Size2D(10, 30));
-	ICAM_PTR camera = std::make_shared<IdealCamera>(robot, Pos2D(0,0));
-	robot->addCamera(camera);
-	world.addObject(robot);
+	for (size_t i = 0; i < 100; i++)
+	{
+		auto robot = std::make_shared<Robot>(Pos2D(500, 500), Size2D(10, 30));
+		ICAM_PTR camera = std::make_shared<IdealCamera>(robot, Pos2D(0,0));
+		robot->addCamera(camera);
+		world.addObject(robot);
+		auto agent = std::make_shared<Agent>(robot);
+		robot->setAgent(agent);
+	}
 
-	auto agent = std::make_shared<Agent>(robot);
-	robot->setAgent(agent);
 
 	// Main loop
 	while (!GetGM().shouldCloseWindow())

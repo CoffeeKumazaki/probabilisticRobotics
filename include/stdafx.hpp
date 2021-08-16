@@ -20,3 +20,4 @@
 #include <memory>
 
 #include <typedef.hpp>
+#include <util/random.hpp>

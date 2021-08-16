@@ -14,11 +14,14 @@ Robot::~Robot() {
 
 void Robot::draw() {
 
-  GetGM().drawRectangle(pos.x, pos.y, size.w, size.h, 1.0, WHITE);
+  GetGM().drawRectangle(pos.x, pos.y, size.w, size.h, pos.theta, 1.0, WHITE);
   IdealRobot::draw();
 }
 
 void Robot::update(double dt) {
 
   IdealRobot::update(dt);
+  pos.x += util::nrand(0, 0.2);
+  pos.y += util::nrand(0, 0.2);
+  pos.theta += util::nrand(0, 0.01);
 }

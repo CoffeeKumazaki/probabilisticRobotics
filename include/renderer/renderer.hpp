@@ -34,8 +34,8 @@ public:
   void setBackgroundcolor(color col);
   void drawCircle(double x, double y, double r, double lw = 1, color col = BLACK);
   void fillCircle(double x, double y, double r, color col = BLACK);
-  void drawRectangle(double x, double y, double w, double h, double lw = 1, color col = BLACK);
-  void fillRectangle(double x, double y, double w, double h, color col = BLACK);
+  void drawRectangle(double x, double y, double w, double h, double theta = 0, double lw = 1, color col = BLACK);
+  void fillRectangle(double x, double y, double w, double h, double theta = 0, color col = BLACK);
   void drawLine(double x1, double y1, double x2, double y2, double lw = 1, color col = BLACK);
 
 private:
