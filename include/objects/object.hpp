@@ -8,7 +8,7 @@ public:
   ~Object();
 
   virtual void draw();
-  virtual void update();
+  virtual void update(double dt);
   Pos2D getPos() { return pos; }
 
 protected:
@@ -16,3 +16,4 @@ protected:
 };
 
 using OBJ_PTR = std::shared_ptr<Object>;
+using LOBJ = std::list<OBJ_PTR>;

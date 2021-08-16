@@ -18,6 +18,6 @@ void Object::draw() {
   
 }
 
-void Object::update() {
-  
+void Object::update(double dt) {
+
 }

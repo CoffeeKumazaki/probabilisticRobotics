@@ -5,6 +5,8 @@
 #include <objects/robot.hpp>
 #include <sensors/ideal_camera.hpp>
 
+#define SIM_DT (0.1)
+
 int main(int argc, char const *argv[]) {
 
 	GetGM().init();
@@ -22,12 +24,16 @@ int main(int argc, char const *argv[]) {
 	robot->addCamera(camera);
 	world.addObject(robot);
 
+	auto agent = std::make_shared<Agent>(robot);
+	robot->setAgent(agent);
+
 	// Main loop
 	while (!GetGM().shouldCloseWindow())
 	{
 		GetGM().prerender();
 
 		world.draw();
+		world.update(SIM_DT);
 
 		// Rendering
 		GetGM().render();

@@ -9,7 +9,7 @@ public:
   ~Robot();
 
   void draw();
-  void update();
+  void update(double dt);
 
 private:
   Size2D size;

@@ -20,6 +20,7 @@ public:
   void term();
 
   void draw();
+  void update(double dt);
   void addObject(OBJ_PTR obj);
   MAP_PTR getMap() { return map; }
 

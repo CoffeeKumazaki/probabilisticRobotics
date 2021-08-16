@@ -18,6 +18,7 @@ void Robot::draw() {
   IdealRobot::draw();
 }
 
-void Robot::update() {
+void Robot::update(double dt) {
 
+  IdealRobot::update(dt);
 }

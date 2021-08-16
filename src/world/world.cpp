@@ -26,6 +26,14 @@ void World::draw() {
   }
 }
 
+void World::update(double dt) {
+
+  for (auto o : obs) {
+    o->update(dt);
+  }
+}
+
+
 void World::addObject(OBJ_PTR obj) {
 
   auto pos = std::find(obs.begin(), obs.end(), obj);
