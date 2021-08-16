@@ -66,3 +66,11 @@ target_link_libraries(${PROJECT_NAME}
   glfw 
   ${OPENGL_gl_LIBRARY} 
 )
+
+add_executable(test_random 
+  src/util/random.cpp
+  test/test_rand.cpp  
+)
+target_include_directories(test_random PUBLIC
+  include
+)
