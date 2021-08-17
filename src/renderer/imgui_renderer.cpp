@@ -187,12 +187,13 @@ void renderer::drawCircle(double x, double y, double r, double lw /*= 1*/, color
 
 void renderer::fillCircle(double x, double y, double r, color col /*= BLACK*/) {
 
+  ImDrawList *draw_list = ImGui::GetWindowDrawList();
+  draw_list->AddCircleFilled(ImVec2(x, y), r, ImColor(ImVec4(col.r, col.g, col.b, col.a)));
 }
 
 void renderer::drawRectangle(double x, double y, double w, double h, double theta /*= 0*/, double lw /*= 1*/, color col /*= BLACK*/) {
   
   ImDrawList *draw_list = ImGui::GetWindowDrawList();
-  // draw_list->AddRect(ImVec2(x-w/2, y-h/2), ImVec2(x+w/2, y+h/2), ImColor(ImVec4(col.r, col.g, col.b, col.a)), 0.0, 15, lw);
 
   ImColor color(ImVec4(col.r, col.g, col.b, col.a));
   ImVec2 pos[4] = {
@@ -216,6 +217,26 @@ void renderer::drawRectangle(double x, double y, double w, double h, double thet
 }
 
 void renderer::fillRectangle(double x, double y, double w, double h, double theta /*= 0*/, color col /*= BLACK*/) {
+
+  ImDrawList *draw_list = ImGui::GetWindowDrawList();
+
+  ImColor color(ImVec4(col.r, col.g, col.b, col.a));
+  ImVec2 pos[4] = {
+    ImVec2(-h/2, w/2),
+    ImVec2( h/2, w/2),
+    ImVec2( h/2,-w/2),
+    ImVec2(-h/2,-w/2),
+  };
+
+  for (size_t i = 0; i < 4; i++) {
+    double px = pos[i].x;
+    double py = pos[i].y;
+    pos[i].x = px*cos(theta) - py*sin(theta) + x; 
+    pos[i].y = py*cos(theta) + px*sin(theta) + y;
+  }
+
+  draw_list->AddTriangleFilled(pos[0], pos[1], pos[2], color);
+  draw_list->AddTriangleFilled(pos[2], pos[3], pos[0], color);
 
 }
 
