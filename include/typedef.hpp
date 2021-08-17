@@ -10,6 +10,12 @@ struct Pos2D {
   Pos2D(double _x = 0, double _y = 0, double _t = 0) {
     x = _x; y = _y; theta = _t;
   }
+
+  double distance(const Pos2D& trg) {
+    double dx = x - trg.x;
+    double dy = y - trg.y;
+    return sqrt(dx*dx + dy*dy);
+  }
 };
 
 using VPOS = std::vector<Pos2D>;

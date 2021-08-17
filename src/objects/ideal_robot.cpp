@@ -28,11 +28,21 @@ void IdealRobot::update(double dt) {
   Agent::Input inp;
   if (agent) inp = agent->decision();
 
-  pos.x += inp.vx*cos(pos.theta) * dt;
-  pos.y += inp.vx*sin(pos.theta) * dt;
-  pos.theta += inp.yawRate * dt;
+  prevPos = pos;
+  pos = updatePose(pos, inp, dt);
 
   observated.clear();
+}
+
+Pos2D IdealRobot::updatePose(Pos2D prevPos, Agent::Input input, double dt) {
+
+  Pos2D newPos = prevPos;
+
+  newPos.x += input.vx*cos(prevPos.theta) * dt;
+  newPos.y += input.vx*sin(prevPos.theta) * dt;
+  newPos.theta += input.yawRate * dt;
+
+  return newPos;
 }
 
 void IdealRobot::addCamera(ICAM_PTR camera) {

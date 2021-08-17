@@ -12,5 +12,11 @@ public:
   void update(double dt);
 
 private:
+  void addNoise();
+
+private:
   Size2D size;
+
+  double fp; // distance until noise
+  double sigmaTheta; // deviation of noise for theta
 };

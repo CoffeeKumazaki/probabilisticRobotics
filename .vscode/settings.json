@@ -12,6 +12,7 @@
     "sstream": "cpp",
     "__hash_table": "cpp",
     "semaphore": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "streambuf": "cpp"
   }
 }

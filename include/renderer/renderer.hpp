@@ -9,6 +9,9 @@ struct color {
 
 #define WHITE color(255, 255, 255, 255)
 #define BLACK color(  0,   0,   0, 255)
+#define RED   color(255,   0,   0, 255)
+#define GREEN color(  0, 255,   0, 255)
+#define BLUE  color(  0,   0, 255, 255)
 
 class renderer {
 

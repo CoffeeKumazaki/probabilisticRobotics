@@ -54,6 +54,8 @@ set(SRCS
   src/sensors/ideal_camera.cpp
   src/sensors/camera.cpp
   src/agents/agent.cpp
+  src/estimator/estimator.cpp
+  src/estimator/mcl.cpp
   src/util/random.cpp
 )
 add_executable(${PROJECT_NAME} ${SRCS})

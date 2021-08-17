@@ -16,8 +16,12 @@ public:
   void addCamera(ICAM_PTR camera);
   void setAgent(AGENT_PTR a) { agent = a; }
   void getSurroundingObjects(LOBJ& obs);
+  Pos2D updatePose(Pos2D prevPos, Agent::Input input, double dt);
 
-public:
+  Pos2D getPrevPos() { return prevPos; }
+
+protected:
+  Pos2D prevPos;
   LICAM cameras;
   AGENT_PTR agent;
   LOBJ observated;
