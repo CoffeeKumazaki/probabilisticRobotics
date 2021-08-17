@@ -17,6 +17,7 @@ public:
   void setSeed(size_t seed);
   double genUniform(double min, double max);
   double genGaussian(double ave, double sigma);
+  double genExponential(double lambda);
 
 private:
   std::mt19937 rand;
@@ -48,6 +49,13 @@ double RandomGenerator::genGaussian(double ave, double sigma) {
   return dist(rand);   
 }
 
+double RandomGenerator::genExponential(double lambda) {
+
+  std::exponential_distribution<double> dist(lambda);
+  return dist(rand);
+}
+
+
 namespace util
 {
 
@@ -64,6 +72,11 @@ double urand(double min, double max) {
 double nrand(double ave, double sigma) {
 
   return RandomGenerator::getInstance().genGaussian(ave, sigma);
+}
+
+double erand(double lambda) {
+
+  return RandomGenerator::getInstance().genExponential(lambda);
 }
 
 } // namespace util
