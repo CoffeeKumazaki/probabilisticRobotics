@@ -15,7 +15,7 @@ public:
   IdealCamera(OBJ_PTR p, Pos2D pose);
   ~IdealCamera();
 
-  int observation(CameraObservation& observed);
+  virtual int observation(CameraObservation& observed);
 };
 
 using ICAM_PTR = std::shared_ptr<IdealCamera>;

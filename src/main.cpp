@@ -3,7 +3,7 @@
 #include <world/world.hpp>
 #include <objects/landmark.hpp>
 #include <objects/robot.hpp>
-#include <sensors/ideal_camera.hpp>
+#include <sensors/camera.hpp>
 
 #define TIME_INTERVAL (0.1)
 
@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]) {
 	for (size_t i = 0; i < 100; i++)
 	{
 		auto robot = std::make_shared<Robot>(Pos2D(500, 500), Size2D(10, 30));
-		ICAM_PTR camera = std::make_shared<IdealCamera>(robot, Pos2D(0,0));
+		ICAM_PTR camera = std::make_shared<Camera>(robot, Pos2D(0,0));
 		robot->addCamera(camera);
 		world.addObject(robot);
 		auto agent = std::make_shared<Agent>(robot);
