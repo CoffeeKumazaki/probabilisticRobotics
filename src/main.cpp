@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
 	for (size_t i = 0; i < 1; i++)
 	{
 		auto robot = std::make_shared<Robot>(Pos2D(500, 500), Size2D(10, 30));
-		ICAM_PTR camera = std::make_shared<Camera>(robot, Pos2D(0,0));
+		ICAM_PTR camera = std::make_shared<Camera>(robot, "camera 01", Pos2D(0,0));
 		robot->addCamera(camera);
 		world.addObject(robot);
 		auto estimator = std::make_shared<MCLEstimator>();

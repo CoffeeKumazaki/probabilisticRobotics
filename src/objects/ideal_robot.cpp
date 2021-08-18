@@ -1,5 +1,6 @@
 #include <stdafx.hpp>
 #include <renderer/renderer.hpp>
+#include <sensors/observed_data.hpp>
 #include <objects/ideal_robot.hpp>
 
 IdealRobot::IdealRobot(Pos2D p)
@@ -31,7 +32,8 @@ void IdealRobot::update(double dt) {
   prevPos = pos;
   pos = updatePose(pos, inp, dt);
 
-  observated.clear();
+  observed.clear();
+  sensorData.clear();
 }
 
 Pos2D IdealRobot::updatePose(Pos2D prevPos, Agent::Input input, double dt) {
@@ -49,21 +51,36 @@ void IdealRobot::addCamera(ICAM_PTR camera) {
   cameras.push_back(camera);
 }
 
-void IdealRobot::getSurroundingObjects(LOBJ& obs) {
+void IdealRobot::getSurroundingObjects(LOBJ& objs) {
 
-  if (observated.empty()) {
-    for (auto c : cameras) {
-      IdealCamera::CameraObservation obs;
-      c->observation(obs);
-      for (auto o : obs) {
-        double ox = pos.x + o.distance*cos(o.direction);
-        double oy = pos.y + o.distance*sin(o.direction);
-        observated.push_back(
-          std::make_shared<Object>(Pos2D(ox, oy))
-        );
-      }
+  if (observed.empty()) {
+    updateSensorData();
+    for (auto sd : sensorData) {
+      double x = pos.x + sd->dis*cos(sd->dir);
+      double y = pos.y + sd->dis*sin(sd->dir);
+      auto obj = std::make_shared<Object>(Pos2D(x, y));
+      observed.push_back(obj);
     }
   }
 
-  obs.assign(observated.begin(), observated.end());
+  objs.assign(observed.begin(), observed.end());
+}
+
+void IdealRobot::getSensorData(LOBS& obs) {
+
+  if (sensorData.empty()) {
+    updateSensorData();
+  }
+
+  obs.assign(sensorData.begin(), sensorData.end());
+}
+
+void IdealRobot::updateSensorData() {
+
+  sensorData.clear();
+  for (auto c : cameras) {
+    LOBS obs;
+    c->observation(obs);
+    sensorData.insert(sensorData.cbegin(), obs.begin(), obs.end());      
+  }
 }

@@ -51,6 +51,7 @@ set(SRCS
   src/objects/ideal_robot.cpp
   src/objects/robot.cpp
   src/sensors/sensor.cpp
+  src/sensors/observed_data.cpp
   src/sensors/ideal_camera.cpp
   src/sensors/camera.cpp
   src/agents/agent.cpp

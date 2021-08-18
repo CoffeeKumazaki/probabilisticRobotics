@@ -5,10 +5,10 @@
 class Camera : public IdealCamera {
 
 public:
-  Camera(OBJ_PTR p, Pos2D pose);
+  Camera(OBJ_PTR p, std::string name, Pos2D pose);
   ~Camera();
 
-  virtual int observation(CameraObservation& observed);
+  virtual int observation(LOBS& observed);
   void setDistDev(double dev) { dist_dev = dev;}
   void setDirDev(double dev) { dir_dev = dev;}
 

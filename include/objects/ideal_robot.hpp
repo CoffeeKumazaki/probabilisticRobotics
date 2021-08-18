@@ -15,16 +15,21 @@ public:
 
   void addCamera(ICAM_PTR camera);
   void setAgent(AGENT_PTR a) { agent = a; }
-  void getSurroundingObjects(LOBJ& obs);
+  void getSurroundingObjects(LOBJ& objs);
+  void getSensorData(LOBS& obs);
   Pos2D updatePose(Pos2D prevPos, Agent::Input input, double dt);
 
   Pos2D getPrevPos() { return prevPos; }
+
+private:
+  void updateSensorData();
 
 protected:
   Pos2D prevPos;
   LICAM cameras;
   AGENT_PTR agent;
-  LOBJ observated;
+  LOBJ observed;
+  LOBS sensorData;
 };
 
 using IROBOT_PTR = std::shared_ptr<IdealRobot>;

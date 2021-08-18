@@ -8,8 +8,10 @@ class MCLEstimator : public PoseEstimator {
 
   struct Particle {
     Pos2D pose;
-    Particle(Pos2D pos) {
+    double weight;
+    Particle(Pos2D pos, double w) {
       pose = pos;
+      weight = w;
     }
   };
 
@@ -22,7 +24,7 @@ public:
   void init(Pos2D initPos);
   void draw();
 
-  Pos2D estimate(Pos2D prevPos, Agent::Input input, double dt);
+  Pos2D estimate(Pos2D prevPos, Agent::Input input, const LOBS& obs, double dt);
   Agent::Input addNoise(Agent::Input org, double dt);
   void setRobot(std::shared_ptr<IdealRobot> r) { robot = r; };
 

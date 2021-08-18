@@ -5,17 +5,10 @@
 class IdealCamera : public Sensor {
 
 public:
-  struct Observed {
-    double distance = 0;
-    double direction = 0;
-  };
-  using CameraObservation = std::list<Observed>;
-
-public:
-  IdealCamera(OBJ_PTR p, Pos2D pose);
+  IdealCamera(OBJ_PTR p, std::string name, Pos2D pose);
   ~IdealCamera();
 
-  virtual int observation(CameraObservation& observed);
+  virtual int observation(LOBS& observed);
 };
 
 using ICAM_PTR = std::shared_ptr<IdealCamera>;

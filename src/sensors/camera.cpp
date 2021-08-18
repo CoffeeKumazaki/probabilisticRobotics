@@ -1,8 +1,8 @@
 #include <stdafx.hpp>
 #include <sensors/camera.hpp>
 
-Camera::Camera(OBJ_PTR p, Pos2D pose)
-: IdealCamera(p, pose)
+Camera::Camera(OBJ_PTR p, std::string name, Pos2D pose)
+: IdealCamera(p, name, pose)
 , dist_dev(0.01)
 , dir_dev(0.01)
 {
@@ -11,16 +11,14 @@ Camera::Camera(OBJ_PTR p, Pos2D pose)
 Camera::~Camera() {
 }
 
-int Camera::observation(CameraObservation& observed) {
+int Camera::observation(LOBS& observed) {
 
-  CameraObservation tmp;
-  int num = IdealCamera::observation(tmp);
+  int num = IdealCamera::observation(observed);
 
-  for (auto o : tmp) {
-    Observed pobs;
-    pobs.distance  = util::nrand(o.distance, o.distance*dist_dev);
-    pobs.direction = util::nrand(o.direction, dir_dev);
-    observed.push_back(pobs);
+  for (auto o : observed) {
+    ObservedData pobs;
+    o->dis = util::nrand(o->dis, o->dis*dist_dev);
+    o->dir = util::nrand(o->dir, dir_dev);
   }
   return num;
 }

@@ -21,7 +21,7 @@ void MCLEstimator::init(Pos2D initPos) {
 
   particles.clear();
   for (size_t i = 0; i < nParticle; i++) {
-    particles.push_back(std::make_shared<Particle>(initPos));
+    particles.push_back(std::make_shared<Particle>(initPos, 1.0/nParticle));
   }
 }
 
@@ -49,8 +49,7 @@ Agent::Input MCLEstimator::addNoise(Agent::Input org, double dt) {
   return newInput;
 }
 
-
-Pos2D MCLEstimator::estimate(Pos2D prevPos, Agent::Input input, double dt) {
+Pos2D MCLEstimator::estimate(Pos2D prevPos, Agent::Input input, const LOBS& obs, double dt) {
 
   double ax = 0, ay = 0, at = 0;
   for (auto p : particles) {

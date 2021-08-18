@@ -25,7 +25,9 @@ Agent::Input Agent::decision() {
 Pos2D Agent::estimation(double dt) {
 
   prevPos = curPos;
-  curPos = estimator->estimate(prevPos, prevInput, dt);
+  LOBS obs;
+  parent->getSensorData(obs);
+  curPos = estimator->estimate(prevPos, prevInput, obs, dt);
   return curPos;
 }
 
