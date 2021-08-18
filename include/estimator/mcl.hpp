@@ -19,6 +19,7 @@ public:
     double sigma_vy = 0.1, double sigma_yv = 0.01);
   ~MCLEstimator();
 
+  void init(Pos2D initPos);
   void draw();
 
   Pos2D estimate(Pos2D prevPos, Agent::Input input, double dt);
@@ -27,7 +28,7 @@ public:
 
 private:
   size_t nParticle;
-  std::vector<Particle> particles;
+  std::vector<std::shared_ptr<Particle>> particles;
   std::shared_ptr<IdealRobot> robot;
 
   double sigma_vv, sigma_yy, sigma_vy, sigma_yv;

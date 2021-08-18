@@ -8,6 +8,7 @@ Agent::Agent(std::shared_ptr<IdealRobot> p, std::shared_ptr<PoseEstimator> e)
 , estimator(e)
 {
   curPos = p->getPos();
+  estimator->init(curPos);
 }
 
 Agent::~Agent() 

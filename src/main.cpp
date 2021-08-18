@@ -29,7 +29,6 @@ int main(int argc, char const *argv[]) {
 		auto estimator = std::make_shared<MCLEstimator>();
 		auto agent = std::make_shared<Agent>(robot, estimator);
 		robot->setAgent(agent);
-		
 	}
 
 

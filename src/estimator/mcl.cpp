@@ -17,10 +17,18 @@ MCLEstimator::~MCLEstimator() {
   
 }
 
+void MCLEstimator::init(Pos2D initPos) {
+
+  particles.clear();
+  for (size_t i = 0; i < nParticle; i++) {
+    particles.push_back(std::make_shared<Particle>(initPos));
+  }
+}
+
 void MCLEstimator::draw() {
 
   for (auto p : particles) {
-    GetGM().fillCircle(p.pose.x, p.pose.y, 1, RED);
+    GetGM().fillCircle(p->pose.x, p->pose.y, 1, RED);
   }
 }
 
@@ -44,14 +52,12 @@ Agent::Input MCLEstimator::addNoise(Agent::Input org, double dt) {
 
 Pos2D MCLEstimator::estimate(Pos2D prevPos, Agent::Input input, double dt) {
 
-  particles.clear();
   double ax = 0, ay = 0, at = 0;
-  for (size_t i = 0; i < nParticle; i++) {
-    Pos2D pos = robot->updatePose(prevPos, addNoise(input, dt), dt);
-    particles.push_back(Particle(pos));
-    ax += pos.x;
-    ay += pos.y;
-    at += pos.theta;
+  for (auto p : particles) {
+    p->pose = robot->updatePose(p->pose, addNoise(input, dt), dt);
+    ax += p->pose.x;
+    ay += p->pose.y;
+    at += p->pose.theta;
   }
   ax /= nParticle; ay /= nParticle; at /= nParticle;
 
