@@ -8,7 +8,7 @@ public:
   Camera(OBJ_PTR p, std::string name, Pos2D pose);
   ~Camera();
 
-  virtual int observation(LOBS& observed);
+  virtual int observation(Pos2D pos, LOBS& observed);
   void setDistDev(double dev) { dist_dev = dev;}
   void setDirDev(double dev) { dir_dev = dev;}
 

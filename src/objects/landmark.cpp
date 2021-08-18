@@ -2,13 +2,13 @@
 #include <objects/landmark.hpp>
 #include <renderer/renderer.hpp>
 
-Landmark::Landmark() 
-: Object()
+Landmark::Landmark(size_t id) 
+: Object(id)
 {
 }
 
-Landmark::Landmark(Pos2D p, double radius)
-: Object(p)
+Landmark::Landmark(size_t id, Pos2D p, double radius)
+: Object(id, p)
 , r(radius)
 {
 }

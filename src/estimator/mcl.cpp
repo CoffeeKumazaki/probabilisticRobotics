@@ -1,4 +1,6 @@
 #include <stdafx.hpp>
+#include <util/gaussian.hpp>
+#include <world/world.hpp>
 #include <estimator/mcl.hpp>
 #include <objects/ideal_robot.hpp>
 #include <renderer/renderer.hpp>
@@ -49,16 +51,80 @@ Agent::Input MCLEstimator::addNoise(Agent::Input org, double dt) {
   return newInput;
 }
 
-Pos2D MCLEstimator::estimate(Pos2D prevPos, Agent::Input input, const LOBS& obs, double dt) {
+Pos2D MCLEstimator::estimate(IROBOT_PTR robot, double dt) {
 
-  double ax = 0, ay = 0, at = 0;
+  Pos2D likeliPos;
+  double likelihood = 0;
   for (auto p : particles) {
-    p->pose = robot->updatePose(p->pose, addNoise(input, dt), dt);
-    ax += p->pose.x;
-    ay += p->pose.y;
-    at += p->pose.theta;
+    updatePose(p.get(), robot->getAgent()->getPrevInput(), dt);
+    updateWeight(p.get(), robot);
+    if (likelihood < p->weight) {
+      likelihood = p->weight;
+      likeliPos = p->pose;
+    }
   }
-  ax /= nParticle; ay /= nParticle; at /= nParticle;
+  resampling();
 
-  return Pos2D(ax, ay, at);
+  return likeliPos;
+}
+
+void MCLEstimator::updatePose(Particle* p, Agent::Input input, double dt) {
+
+  p->pose = robot->updatePose(p->pose, addNoise(input, dt), dt);
+}
+
+void MCLEstimator::updateWeight(Particle* p, IROBOT_PTR robot) {
+
+  auto map = World::getInstance().getMap();
+  LOBJ objs;
+  map->getObjects(objs);
+  
+  LOBS observed;
+  robot->getSensorData(observed);
+  for ( auto o : observed) {
+    auto sensor = robot->getSensor(o->sensorName);
+
+    OBS_PTR pobs;
+    for (auto obj : objs) {
+      if (obj->getId() == o->objID){
+        pobs = sensor->observation(p->pose + sensor->getPose(), obj);
+        break;
+      }
+    }
+
+    Eigen::MatrixXd cov(2, 2);
+    cov << (o->dis * o->disErr)*(o->dis * o->disErr), 0.0
+        , 0.0, (o->dirErr)*(o->dirErr);
+
+    Eigen::VectorXd mu(2); 
+    mu << pobs->dis, pobs->dir;
+
+    Eigen::VectorXd x(2);
+    x << o->dis, o->dir;
+    p->weight *= util::gaussian2D(x, mu, cov);
+  }
+}
+
+void MCLEstimator::resampling() {
+
+  double weightSum = 0;
+  for ( auto p : particles) {
+    weightSum += p->weight;
+  }
+
+  VP newParticles;  
+  for (size_t i = 0; i < nParticle; i++) {
+    double rand = util::urand(0.0, weightSum);
+    double acc = 0;
+    for (auto p : particles) {
+      acc += p->weight;
+      if (acc >= rand ) {
+        newParticles.push_back(std::make_shared<Particle>(p->pose, 1.0/nParticle));
+        break;
+      }
+    }
+  }
+
+  particles.assign(newParticles.begin(), newParticles.end());
+
 }

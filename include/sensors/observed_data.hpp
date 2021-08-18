@@ -4,6 +4,7 @@ struct ObservedData
 {
   std::string sensorName;
   size_t timeStamp;
+  size_t objID = -1;
   double dis = 0.0; // distance
   double dir = 0.0; // direction
   double disErr = 0.0; 

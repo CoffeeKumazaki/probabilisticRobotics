@@ -5,7 +5,7 @@
 class Robot : public IdealRobot {
 
 public:
-  Robot(Pos2D p, Size2D s);
+  Robot(size_t id, Pos2D p, Size2D s);
   ~Robot();
 
   void draw();
@@ -15,8 +15,6 @@ private:
   void addNoise();
 
 private:
-  Size2D size;
-
   double fp; // distance until noise
   double sigmaTheta; // deviation of noise for theta
 };

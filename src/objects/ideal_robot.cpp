@@ -3,8 +3,9 @@
 #include <sensors/observed_data.hpp>
 #include <objects/ideal_robot.hpp>
 
-IdealRobot::IdealRobot(Pos2D p)
-: Object(p)
+IdealRobot::IdealRobot(size_t id, Pos2D p, Size2D s)
+: Object(id, p)
+, size(s)
 {
 }
 
@@ -47,8 +48,18 @@ Pos2D IdealRobot::updatePose(Pos2D prevPos, Agent::Input input, double dt) {
   return newPos;
 }
 
-void IdealRobot::addCamera(ICAM_PTR camera) {
-  cameras.push_back(camera);
+void IdealRobot::addSensor(SENSOR_PTR sensor) {
+  auto name = sensor->getName();
+  if (sensors.count(name) == 0)
+    sensors[name] = sensor;
+}
+
+SENSOR_PTR IdealRobot::getSensor(std::string name) {
+
+  if(sensors.count(name) > 0 )
+    return sensors[name];
+  
+  return nullptr;
 }
 
 void IdealRobot::getSurroundingObjects(LOBJ& objs) {
@@ -58,7 +69,7 @@ void IdealRobot::getSurroundingObjects(LOBJ& objs) {
     for (auto sd : sensorData) {
       double x = pos.x + sd->dis*cos(sd->dir);
       double y = pos.y + sd->dis*sin(sd->dir);
-      auto obj = std::make_shared<Object>(Pos2D(x, y));
+      auto obj = std::make_shared<Object>(sd->objID, Pos2D(x, y));
       observed.push_back(obj);
     }
   }
@@ -78,9 +89,10 @@ void IdealRobot::getSensorData(LOBS& obs) {
 void IdealRobot::updateSensorData() {
 
   sensorData.clear();
-  for (auto c : cameras) {
+  for (auto s : sensors) {
+    auto sensor = s.second;
     LOBS obs;
-    c->observation(obs);
+    sensor->observation(pos + sensor->getPose(), obs);
     sensorData.insert(sensorData.cbegin(), obs.begin(), obs.end());      
   }
 }

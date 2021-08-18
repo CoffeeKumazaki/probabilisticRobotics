@@ -11,6 +11,10 @@ struct Pos2D {
     x = _x; y = _y; theta = _t;
   }
 
+  const Pos2D operator+(const Pos2D& rhs) const {
+    return Pos2D(x + rhs.x, y + rhs.y);
+  }
+
   double distance(const Pos2D& trg) {
     double dx = x - trg.x;
     double dy = y - trg.y;

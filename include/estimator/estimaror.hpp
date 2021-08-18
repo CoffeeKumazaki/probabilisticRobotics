@@ -3,6 +3,7 @@
 #include <sensors/observed_data.hpp>
 #include <agents/agent.hpp>
 
+class IdealRobot;
 class PoseEstimator {
 
 public:
@@ -10,6 +11,6 @@ public:
   ~PoseEstimator();
 
   virtual void init(Pos2D initPos) = 0;
-  virtual Pos2D estimate(Pos2D prevPos, Agent::Input input, const LOBS& obs, double dt) = 0;
+  virtual Pos2D estimate(std::shared_ptr<IdealRobot> robot, double dt) = 0;
   virtual void draw() {};
 };

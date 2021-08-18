@@ -13,6 +13,8 @@ project(${PROJECT_NAME})
 
 find_package(OpenGL REQUIRED)
 add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GLEW)
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(/usr/local/opt/glew/include)
 include_directories(/opt/homebrew/opt/glew/include)
 include_directories(/usr/local/opt/glfw/include)
@@ -57,6 +59,7 @@ set(SRCS
   src/agents/agent.cpp
   src/estimator/estimator.cpp
   src/estimator/mcl.cpp
+  src/util/gaussian.cpp
   src/util/random.cpp
 )
 add_executable(${PROJECT_NAME} ${SRCS})

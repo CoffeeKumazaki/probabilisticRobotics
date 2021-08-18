@@ -22,6 +22,7 @@ public:
   void draw();
   void update(double dt);
   void addObject(OBJ_PTR obj);
+  void addRobot(OBJ_PTR obj);
   MAP_PTR getMap() { return map; }
 
 private:

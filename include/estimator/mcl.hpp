@@ -1,6 +1,7 @@
 #pragma once
 
 #include <estimator/estimaror.hpp>
+#include <objects/ideal_robot.hpp>
 
 class IdealRobot;
 
@@ -14,6 +15,7 @@ class MCLEstimator : public PoseEstimator {
       weight = w;
     }
   };
+  using VP = std::vector<std::shared_ptr<Particle>>;
 
 public:
   MCLEstimator(
@@ -24,13 +26,18 @@ public:
   void init(Pos2D initPos);
   void draw();
 
-  Pos2D estimate(Pos2D prevPos, Agent::Input input, const LOBS& obs, double dt);
+  Pos2D estimate(IROBOT_PTR robot, double dt);
   Agent::Input addNoise(Agent::Input org, double dt);
   void setRobot(std::shared_ptr<IdealRobot> r) { robot = r; };
 
 private:
+  void updatePose(Particle* p, Agent::Input input, double dt);
+  void updateWeight(Particle* p, IROBOT_PTR robot);
+  void resampling();
+
+private:
   size_t nParticle;
-  std::vector<std::shared_ptr<Particle>> particles;
+  VP particles;
   std::shared_ptr<IdealRobot> robot;
 
   double sigma_vv, sigma_yy, sigma_vy, sigma_yv;

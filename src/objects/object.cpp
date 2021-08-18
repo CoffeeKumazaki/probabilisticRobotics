@@ -1,12 +1,14 @@
 #include <stdafx.hpp>
 #include <objects/object.hpp>
 
-Object::Object() 
+Object::Object(size_t _id) 
+: id(_id)
 {
 }
 
-Object::Object(Pos2D p)
-: pos(p)
+Object::Object(size_t _id, Pos2D p)
+: id(_id)
+, pos(p)
 {
 }
 

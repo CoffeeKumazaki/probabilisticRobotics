@@ -2,6 +2,7 @@
 #include <agents/agent.hpp>
 #include <objects/ideal_robot.hpp>
 #include <estimator/estimaror.hpp>
+#include <renderer/renderer.hpp>
 
 Agent::Agent(std::shared_ptr<IdealRobot> p, std::shared_ptr<PoseEstimator> e)
 : parent(p)
@@ -27,11 +28,12 @@ Pos2D Agent::estimation(double dt) {
   prevPos = curPos;
   LOBS obs;
   parent->getSensorData(obs);
-  curPos = estimator->estimate(prevPos, prevInput, obs, dt);
+  curPos = estimator->estimate(parent, dt);
   return curPos;
 }
 
 void Agent::draw() {
 
   estimator->draw();
+  GetGM().drawRectangle(curPos.x, curPos.y, parent->getSize().w, parent->getSize().h, curPos.theta, 1.0, RED);
 }

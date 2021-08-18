@@ -2,9 +2,8 @@
 #include <objects/robot.hpp>
 #include <renderer/renderer.hpp>
 
-Robot::Robot(Pos2D p, Size2D s)
-: IdealRobot(p)
-, size(s)
+Robot::Robot(size_t id, Pos2D p, Size2D s)
+: IdealRobot(id, p, s)
 {
   fp = util::erand(0.2);
   sigmaTheta = 0.01;

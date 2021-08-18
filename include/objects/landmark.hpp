@@ -5,8 +5,8 @@
 class Landmark : public Object {
 
 public:
-  Landmark();  
-  Landmark(Pos2D pos, double raduis);
+  Landmark(size_t id);  
+  Landmark(size_t id, Pos2D pos, double raduis);
   ~Landmark();  
 
   void draw();

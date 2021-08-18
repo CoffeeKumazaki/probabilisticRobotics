@@ -16,16 +16,18 @@ int main(int argc, char const *argv[]) {
 	World& world = World::getInstance();
 	world.init();
 
-	OBJ_PTR landmark1 = std::make_shared<Landmark>(Pos2D(100, 100), 10);
+	OBJ_PTR landmark1 = std::make_shared<Landmark>(100, Pos2D(100, 100), 10);
+	OBJ_PTR landmark2 = std::make_shared<Landmark>(101, Pos2D(500, 100), 10);
 
 	world.getMap()->addObject(landmark1);
+	world.getMap()->addObject(landmark2);
 
 	for (size_t i = 0; i < 1; i++)
 	{
-		auto robot = std::make_shared<Robot>(Pos2D(500, 500), Size2D(10, 30));
+		auto robot = std::make_shared<Robot>(i, Pos2D(500, 500), Size2D(10, 30));
 		ICAM_PTR camera = std::make_shared<Camera>(robot, "camera 01", Pos2D(0,0));
-		robot->addCamera(camera);
-		world.addObject(robot);
+		robot->addSensor(camera);
+		world.addRobot(robot);
 		auto estimator = std::make_shared<MCLEstimator>();
 		auto agent = std::make_shared<Agent>(robot, estimator);
 		robot->setAgent(agent);

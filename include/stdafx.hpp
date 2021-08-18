@@ -19,5 +19,7 @@
 #include <random>
 #include <memory>
 
+#include <Eigen/Dense>
+
 #include <typedef.hpp>
 #include <util/random.hpp>

@@ -11,23 +11,30 @@ IdealCamera::~IdealCamera()
 {
 }
 
-int IdealCamera::observation(LOBS& observed) {
+int IdealCamera::observation(Pos2D pos, LOBS& observed) {
 
   MAP_PTR map = World::getInstance().getMap();
   std::list<OBJ_PTR> objs;
   int nObs = map->getObjects(objs);
 
   for (auto o : objs) {
-    auto obs = std::make_shared<ObservedData>();
-    obs->sensorName = name;
-    Pos2D oPos = o->getPos();
-    Pos2D pPos = parent->getPos();
-    double dx = oPos.x - (pPos.x + pose.x);
-    double dy = oPos.y - (pPos.y + pose.y);
-    obs->dis = sqrt(dx*dx + dy*dy);
-    obs->dir = atan2(dy, dx);
+    auto obs = observation(pos, o);
     observed.push_back(obs);
   }
 
   return observed.size();
+}
+
+OBS_PTR IdealCamera::observation(Pos2D pos, OBJ_PTR o) {
+
+  auto obs = std::make_shared<ObservedData>();
+  obs->sensorName = name;
+  obs->objID = o->getId();
+  Pos2D oPos = o->getPos();
+  double dx = oPos.x - pos.x;
+  double dy = oPos.y - pos.y;
+  obs->dis = sqrt(dx*dx + dy*dy);
+  obs->dir = atan2(dy, dx);
+
+  return obs;
 }

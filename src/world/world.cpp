@@ -33,8 +33,12 @@ void World::update(double dt) {
   }
 }
 
-
 void World::addObject(OBJ_PTR obj) {
+
+  map->addObject(obj);  
+}
+
+void World::addRobot(OBJ_PTR obj) {
 
   auto pos = std::find(obs.begin(), obs.end(), obj);
   if (pos == obs.end()) {

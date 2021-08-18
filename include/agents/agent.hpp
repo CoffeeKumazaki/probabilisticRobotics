@@ -18,6 +18,10 @@ public:
   Pos2D estimation(double dt);
   void draw();
 
+  Pos2D getCurPos()    { return curPos; }
+  Pos2D getPrevPos()   { return prevPos; }
+  Input getPrevInput() { return prevInput; }
+
 protected:
   std::shared_ptr<IdealRobot> parent;
   std::shared_ptr<PoseEstimator> estimator;
